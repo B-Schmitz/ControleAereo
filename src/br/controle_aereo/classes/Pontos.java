@@ -1,60 +1,49 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package classes;
+package br.controle_aereo.classes;
 
-/**
- *
- * @author Rafael
- */
 public class Pontos {
-    Double x,y,r,ang,vel,dir;
-    int linha;
-    String nome;
 
-    public String getNome() {
-        return nome;
+    Double x, y, raio, angulo, velocidade, direcao;
+    int linha, id;
+
+    public int getId() {
+        return id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setId(int id) {
+        this.id = id;
     }
-    
-    
-    
+
     public Double getR() {
-        return r;
+        return raio;
     }
 
     public void setR(Double r) {
-        this.r = r;
+        this.raio = r;
     }
 
     public Double getAng() {
-        return ang;
+        return angulo;
     }
 
     public void setAng(Double ang) {
-        this.ang = ang;
+        this.angulo = ang;
     }
 
     public Double getVel() {
-        return vel;
+        return velocidade;
     }
 
     public void setVel(Double vel) {
-        this.vel = vel;
+        this.velocidade = vel;
     }
 
     public Double getDir() {
-        return dir;
+        return direcao;
     }
 
     public void setDir(Double dir) {
-        this.dir = dir;
-    }   
+        this.direcao = dir;
+    }
 
     public int getLinha() {
         return linha;
@@ -63,7 +52,7 @@ public class Pontos {
     public void setLinha(int linha) {
         this.linha = linha;
     }
-    
+
     public Double getX() {
         return x;
     }
@@ -79,6 +68,5 @@ public class Pontos {
     public void setY(Double y) {
         this.y = y;
     }
-    
-    
+
 }
