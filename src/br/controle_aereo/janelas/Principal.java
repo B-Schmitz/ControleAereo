@@ -20,13 +20,13 @@ public class Principal extends javax.swing.JFrame {
     private final Calculos cal = new Calculos();
     private double[] resultado = new double[2];
     private final Graphics graph;
-    private final Thread thread = new Thread(new ThreadGrafico(this));
     private final DefaultTableModel model;
     private double x, y, r, ang, vel, dir;
     private final Queue<Pontos> filaAcao = new LinkedList<>();
     private final Queue<Pontos> filaCalculo = new LinkedList<>();
     private final Verifica v = new Verifica();
     private ArrayList<Pontos> arrayPontos;
+    private ThreadGrafico t = new ThreadGrafico(this);
 
     public JPanel GetPainel() {
         return Painel_Radar;
@@ -58,7 +58,6 @@ public class Principal extends javax.swing.JFrame {
 
     public void iniciaThread() {
         try {
-            thread.start();
         } catch (Exception e) {
         }
     }
@@ -662,15 +661,19 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        iniciaThread();
+       // iniciaThread();
         try {
             vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
             dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
             Object data[] = new Object[]{false, model.getRowCount(), String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
             insereTabela(data);
+            t.run();
         } catch (ExceptionCoord e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
         }
+        
+        
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -738,9 +741,14 @@ public class Principal extends javax.swing.JFrame {
                 insereValorFormatado(resultado[0], p.getLinha(), 4);
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
             }
+            
+            t.run();
+            filaCalculo.clear();
+            
         } catch (ExceptionCoord e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -756,9 +764,12 @@ public class Principal extends javax.swing.JFrame {
                 insereValorFormatado(resultado[0], p.getLinha(), 4);
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
             }
+            t.run();
+            filaCalculo.clear();
         } catch (ExceptionCoord e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -790,9 +801,12 @@ public class Principal extends javax.swing.JFrame {
                 insereValorFormatado(resultado[0], p.getLinha(), 4);
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
             }
+            t.run();
+            filaCalculo.clear();
         } catch (ExceptionCoord e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -905,7 +919,7 @@ public class Principal extends javax.swing.JFrame {
 
             }
         }
-        if (!filaAcao.isEmpty()) {
+        if (!filaAcao.isEmpty() || !filaCalculo.isEmpty()) {
             acaoExclusao = true;
         } else {
             JOptionPane.showMessageDialog(null, "Nenhuma linha selecionada.", "Aviso", JOptionPane.WARNING_MESSAGE);

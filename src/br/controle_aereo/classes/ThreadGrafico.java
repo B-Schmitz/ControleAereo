@@ -10,9 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import br.controle_aereo.janelas.Principal;
+import java.awt.Color;
 
 
-public class ThreadGrafico implements Runnable {
+public class ThreadGrafico  {
 
     Principal frame;
     Graphics graph;
@@ -33,7 +34,7 @@ public class ThreadGrafico implements Runnable {
         }
     }
 
-    @Override
+    
     public void run() {
         System.out.println("Thread iniciada com sucesso.");
         graph = frame.GetPainel().getGraphics();
@@ -41,13 +42,13 @@ public class ThreadGrafico implements Runnable {
         graph.drawLine(200, 0, 200, 400);
         Double[] coordenadas = new Double[2];
 
-        while (frame.isAlive()) {
+        if (frame.isAlive()) {
             if (frame.isAcaoExclusao()) {
                 while (!frame.getFilaAcao().isEmpty()) {
                     ponto = new Pontos();
                     ponto = frame.getFilaAcao().poll();
                     coordenadas = normalizaPontos(ponto.getX(), ponto.getY());
-                    graph.clearRect(coordenadas[0].intValue() - 10, coordenadas[1].intValue() - 10, 20, 20);
+                    graph.clearRect(coordenadas[0].intValue() - 11, coordenadas[1].intValue() - 11, 23, 23);
                 }
                 frame.setAcaoExclusao(false);
             }
@@ -64,6 +65,7 @@ public class ThreadGrafico implements Runnable {
                 Logger.getLogger(ThreadGrafico.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
     }
 
     public void inserePonto(Double x, Double y, double dir) {
@@ -73,8 +75,8 @@ public class ThreadGrafico implements Runnable {
         double locationY = img.getHeight() / 2;
         AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-        //graph.drawOval(x.intValue() - 3, y.intValue() - 3, 6, 6);
         graph.drawImage(op.filter(img, null), x.intValue() - 15, y.intValue() - 15, null);
+       
 
     }
 
