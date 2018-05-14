@@ -5,18 +5,18 @@
  */
 package br.controle_aereo.classes;
 
-import exception.ExceptionCoord;
+import br.controle_aereo.excecoes.ExcecaoGeral;
 
 /**
  *
  * @author comp16
  */
 public class Verifica {
-    public Double verificaDouble (String a) throws ExceptionCoord{
+    public Double verificaDouble (String a) throws ExcecaoGeral{
         try{
             return Double.parseDouble(a);
         }catch(Exception e){
-            throw new ExceptionCoord("Número inválido.");
+            throw new ExcecaoGeral("Número inválido.");
         }
     }
 }
