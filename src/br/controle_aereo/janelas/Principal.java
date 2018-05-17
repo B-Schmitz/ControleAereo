@@ -782,11 +782,16 @@ public class Principal extends javax.swing.JFrame {
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
         // TODO add your handling code here:
+
+        System.out.println("teste");
         getSelecionados();
+        
         int size = filaCalculo.size();
+        
         for (int i = 0; i < size; i++) {
             model.removeRow(filaCalculo.poll().getLinha() - i);
         }
+        t.run();
     }//GEN-LAST:event_btn_excluirActionPerformed
 
     private void btn_transladarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transladarActionPerformed
@@ -897,7 +902,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void btn_selecionar_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionar_todosActionPerformed
-        if ((boolean) model.getValueAt(1, 0) == true) {
+        if ((boolean) model.getValueAt(0,0) == true) {
             for (int i = 0; i < model.getRowCount(); i++) {
                 model.setValueAt(false, i, 0);
             }
@@ -928,7 +933,7 @@ public class Principal extends javax.swing.JFrame {
 
             }
         }
-        if (!filaAcao.isEmpty() || !filaCalculo.isEmpty()) {
+        if (!filaAcao.isEmpty() && !filaCalculo.isEmpty()) {
             acaoExclusao = true;
         } else {
             JOptionPane.showMessageDialog(null, "Nenhuma linha selecionada.", "Aviso", JOptionPane.WARNING_MESSAGE);
