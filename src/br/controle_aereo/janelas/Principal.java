@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -27,6 +28,7 @@ public class Principal extends javax.swing.JFrame {
     private final Verifica v = new Verifica();
     private ArrayList<Pontos> arrayPontos;
     private final ThreadGrafico t = new ThreadGrafico(this);
+    private final ImageIcon icone;
 
     public JPanel GetPainel() {
         return Painel_Radar;
@@ -51,6 +53,8 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         this.setLocationRelativeTo(null);
+        icone = new ImageIcon("src/br/controle_aereo/icones/radar.png");
+        this.setIconImage(icone.getImage());
         radiobutton_Cartesiana.setSelected(true);
         graph = Painel_Radar.getGraphics();
         model = (DefaultTableModel) tabela_Datagrid.getModel();
@@ -346,18 +350,17 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(btn_inserir))
         );
 
-        Painel_Radar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         Painel_Radar.setPreferredSize(new java.awt.Dimension(400, 400));
 
         javax.swing.GroupLayout Painel_RadarLayout = new javax.swing.GroupLayout(Painel_Radar);
         Painel_Radar.setLayout(Painel_RadarLayout);
         Painel_RadarLayout.setHorizontalGroup(
             Painel_RadarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         Painel_RadarLayout.setVerticalGroup(
             Painel_RadarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
 
         jPanel3.setBackground(new java.awt.Color(0, 51, 102));
@@ -677,6 +680,7 @@ public class Principal extends javax.swing.JFrame {
             
             Object data[] = new Object[]{false, model.getRowCount(), String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
             insereTabela(data);
+            getSelecionados();
             t.run();
         } catch (ExcecaoGeral e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);

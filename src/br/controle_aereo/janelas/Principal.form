@@ -519,11 +519,6 @@
         </Container>
         <Container class="javax.swing.JPanel" name="Painel_Radar">
           <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder thickness="3"/>
-              </Border>
-            </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[400, 400]"/>
             </Property>
@@ -532,12 +527,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="394" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="394" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
