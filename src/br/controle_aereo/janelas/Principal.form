@@ -437,9 +437,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txt_Y">
-              <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_YFocusLost"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="label_Raio">
               <Properties>
@@ -613,7 +610,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txt_y_escalar" min="-2" pref="55" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btn_escalar" min="-2" pref="47" max="-2" attributes="0"/>
+                          <Component id="btn_escalar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -707,8 +704,8 @@
                               </Group>
                               <Component id="jLabel1" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btn_rotacionar" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btn_rotacionar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -808,7 +805,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txt_y_transladar" min="-2" pref="55" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btn_transladar" min="-2" pref="47" max="-2" attributes="0"/>
+                          <Component id="btn_transladar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>

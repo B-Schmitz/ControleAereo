@@ -131,7 +131,7 @@ public class Principal extends javax.swing.JFrame {
         painel_principal.setBackground(new java.awt.Color(0, 51, 102));
 
         jPanel5.setBackground(new java.awt.Color(0, 51, 102));
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Coordenadas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Coordenadas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel5.setForeground(new java.awt.Color(255, 255, 255));
 
         tabela_Datagrid.setModel(new javax.swing.table.DefaultTableModel(
@@ -203,7 +203,7 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jPanel6.setBackground(new java.awt.Color(0, 51, 102));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inserir Dados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Inserir Dados", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         radiobutton_Cartesiana.setBackground(new java.awt.Color(0, 51, 102));
         buttonGroup1.add(radiobutton_Cartesiana);
@@ -220,12 +220,6 @@ public class Principal extends javax.swing.JFrame {
 
         label_Y.setForeground(new java.awt.Color(255, 255, 255));
         label_Y.setText("Y:");
-
-        txt_Y.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_YFocusLost(evt);
-            }
-        });
 
         label_Raio.setForeground(new java.awt.Color(255, 255, 255));
         label_Raio.setText("Raio:");
@@ -367,10 +361,10 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(0, 51, 102));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Funções", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Funções", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jPanel4.setBackground(new java.awt.Color(0, 51, 102));
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Escalar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Escalar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("X:");
@@ -405,7 +399,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_y_escalar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_escalar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_escalar)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -424,7 +418,7 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jPanel7.setBackground(new java.awt.Color(0, 51, 102));
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rotacionar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rotacionar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Ângulo:");
@@ -465,8 +459,8 @@ public class Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_y_rotacionar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_rotacionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_rotacionar)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -486,7 +480,7 @@ public class Principal extends javax.swing.JFrame {
         );
 
         jPanel8.setBackground(new java.awt.Color(0, 51, 102));
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transladar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Transladar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("X:");
@@ -521,7 +515,7 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_y_transladar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_transladar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_transladar)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -668,8 +662,19 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         // iniciaThread();
         try {
+            
+            x = v.verificaDouble(txt_X.getText().replaceAll(",", "."));
+            y = v.verificaDouble(txt_Y.getText().replaceAll(",", "."));
             vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
             dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
+
+            resultado = cal.calculaPolar(x, y);
+            r = resultado[0];
+            ang = resultado[1];
+            txt_Raio.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[0])));
+            txt_Angulo.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[1])));
+ 
+            
             Object data[] = new Object[]{false, model.getRowCount(), String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
             insereTabela(data);
             t.run();
@@ -687,22 +692,6 @@ public class Principal extends javax.swing.JFrame {
     public void insereTabela(Object data[]) {
         model.addRow(data);
     }
-
-    private void txt_YFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_YFocusLost
-        // TODO add your handling code here:
-        try {
-            x = v.verificaDouble(txt_X.getText().replaceAll(",", "."));
-            y = v.verificaDouble(txt_Y.getText().replaceAll(",", "."));
-
-            resultado = cal.calculaPolar(x, y);
-            r = resultado[0];
-            ang = resultado[1];
-            txt_Raio.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[0])));
-            txt_Angulo.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[1])));
-        } catch (ExcecaoGeral e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_txt_YFocusLost
 
     private void txt_AnguloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_AnguloFocusLost
 
@@ -785,9 +774,9 @@ public class Principal extends javax.swing.JFrame {
 
         System.out.println("teste");
         getSelecionados();
-        
+
         int size = filaCalculo.size();
-        
+
         for (int i = 0; i < size; i++) {
             model.removeRow(filaCalculo.poll().getLinha() - i);
         }
@@ -902,13 +891,16 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void btn_selecionar_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionar_todosActionPerformed
-        if ((boolean) model.getValueAt(0,0) == true) {
-            for (int i = 0; i < model.getRowCount(); i++) {
-                model.setValueAt(false, i, 0);
-            }
-        } else {
-            for (int i = 0; i < model.getRowCount(); i++) {
-                model.setValueAt(true, i, 0);
+
+        if (model.getRowCount() > 0) {
+            if ((boolean) model.getValueAt(0, 0) == true) {
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    model.setValueAt(false, i, 0);
+                }
+            } else {
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    model.setValueAt(true, i, 0);
+                }
             }
         }
 
