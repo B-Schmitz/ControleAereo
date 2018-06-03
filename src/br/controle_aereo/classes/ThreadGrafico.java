@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import br.controle_aereo.janelas.Principal;
-import java.awt.Color;
 
 
 public class ThreadGrafico  {
@@ -36,19 +35,21 @@ public class ThreadGrafico  {
 
     
     public void run() {
-        System.out.println("Thread iniciada com sucesso.");
         graph = frame.GetPainel().getGraphics();
         graph.drawLine(0, 200, 400, 200);
         graph.drawLine(200, 0, 200, 400);
         Double[] coordenadas = new Double[2];
 
         if (frame.isAlive()) {
+             graph.clearRect(0, 0, 400, 400);
             if (frame.isAcaoExclusao()) {
                 while (!frame.getFilaAcao().isEmpty()) {
                     ponto = new Pontos();
                     ponto = frame.getFilaAcao().poll();
                     coordenadas = normalizaPontos(ponto.getX(), ponto.getY());
-                    graph.clearRect(coordenadas[0].intValue() - 11, coordenadas[1].intValue() - 11, 23, 23);
+                   
+                    System.out.println("cor: " + coordenadas[0].intValue() +  "Dois: " + coordenadas[0].intValue());
+                    
                 }
                 frame.setAcaoExclusao(false);
             }

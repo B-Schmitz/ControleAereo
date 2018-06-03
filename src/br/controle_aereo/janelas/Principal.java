@@ -60,12 +60,6 @@ public class Principal extends javax.swing.JFrame {
         model = (DefaultTableModel) tabela_Datagrid.getModel();
     }
 
-    public void iniciaThread() {
-        try {
-        } catch (Exception e) {
-        }
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -662,8 +656,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_radiobutton_PolarActionPerformed
 
     private void btn_inserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inserirActionPerformed
-        // TODO add your handling code here:
-        // iniciaThread();
+        
         try {
             
             x = v.verificaDouble(txt_X.getText().replaceAll(",", "."));
@@ -680,7 +673,6 @@ public class Principal extends javax.swing.JFrame {
             
             Object data[] = new Object[]{false, model.getRowCount(), String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
             insereTabela(data);
-            getSelecionados();
             t.run();
         } catch (ExcecaoGeral e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
