@@ -21,9 +21,11 @@ public class Calculos {
         return resultado;
     }
 
-    public double[] calculaRotacao(double x, double y, double ang) {
-        resultado[0] = x * Math.cos(Math.toRadians(ang)) - y * Math.sin(Math.toRadians(ang));
-        resultado[1] = y * Math.cos(Math.toRadians(ang)) + x * Math.sin(Math.toRadians(ang));
+    public double[] calculaRotacao(double x, double y, double ang, double X, double Y) {
+        x -= X;
+        y -= Y;
+        resultado[0] = (x * Math.cos(Math.toRadians(ang)) - y * Math.sin(Math.toRadians(ang)) + X );
+        resultado[1] = (y * Math.cos(Math.toRadians(ang)) + x * Math.sin(Math.toRadians(ang)) + Y );
         return resultado;
     }
 

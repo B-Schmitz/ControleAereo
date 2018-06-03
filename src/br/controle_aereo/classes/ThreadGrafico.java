@@ -48,7 +48,6 @@ public class ThreadGrafico  {
                     ponto = frame.getFilaAcao().poll();
                     coordenadas = normalizaPontos(ponto.getX(), ponto.getY());
                    
-                    System.out.println("cor: " + coordenadas[0].intValue() +  "Dois: " + coordenadas[0].intValue());
                     
                 }
                 frame.setAcaoExclusao(false);

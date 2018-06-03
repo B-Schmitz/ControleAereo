@@ -740,12 +740,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_escalarActionPerformed
 
     private void btn_rotacionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rotacionarActionPerformed
-        // TODO add your handling code here:
+       
         try {
             getSelecionados();
-            double ang = v.verificaDouble(txt_angulo_rotacionar.getText().replaceAll(",", "."));
+            Double ang = v.verificaDouble(txt_angulo_rotacionar.getText().replaceAll(",", "."));
+            Double X,Y;
+            X = v.verificaDouble(txt_x_rotacionar.getText().replaceAll(",", "."));
+            Y = v.verificaDouble(txt_y_rotacionar.getText().replaceAll(",", "."));
             for (Pontos p : filaCalculo) {
-                resultado = cal.calculaRotacao(p.getX(), p.getY(), ang);
+                resultado = cal.calculaRotacao(p.getX(), p.getY(), ang, X, Y);
                 insereValorFormatado(resultado[0], p.getLinha(), 2);
                 insereValorFormatado(resultado[1], p.getLinha(), 3);
                 resultado = cal.calculaPolar(resultado[0], resultado[1]);
