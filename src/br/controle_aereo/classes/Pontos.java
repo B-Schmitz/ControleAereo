@@ -68,5 +68,4 @@ public class Pontos {
     public void setY(Double y) {
         this.y = y;
     }
-
 }

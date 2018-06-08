@@ -2,7 +2,7 @@ package br.controle_aereo.janelas;
 
 import br.controle_aereo.classes.Calculos;
 import br.controle_aereo.classes.Pontos;
-import br.controle_aereo.classes.ThreadGrafico;
+import br.controle_aereo.classes.Grafico;
 import br.controle_aereo.classes.Verifica;
 import br.controle_aereo.excecoes.ExcecaoGeral;
 import java.awt.Graphics;
@@ -27,7 +27,7 @@ public class Principal extends javax.swing.JFrame {
     private final Queue<Pontos> filaCalculo = new LinkedList<>();
     private final Verifica v = new Verifica();
     private ArrayList<Pontos> arrayPontos;
-    private final ThreadGrafico t = new ThreadGrafico(this);
+    private final Grafico t = new Grafico(this);
     private final ImageIcon icone;
 
     public JPanel GetPainel() {

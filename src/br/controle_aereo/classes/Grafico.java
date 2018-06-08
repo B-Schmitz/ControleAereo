@@ -11,20 +11,19 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import br.controle_aereo.janelas.Principal;
 
+public class Grafico {
 
-public class ThreadGrafico  {
+    private final Principal frame;
+    private Graphics graph;
+    private Pontos ponto;
+    private BufferedImage img = null;
 
-    Principal frame;
-    Graphics graph;
-    Pontos ponto;
-    BufferedImage img = null;
-
-    public ThreadGrafico(Principal frame) {
+    public Grafico(Principal frame) {
         this.frame = frame;
-        carregaImg();
+        Carregar_Imagem();
     }
 
-    public final void carregaImg() {
+    public final void Carregar_Imagem() {
         try {
             img = ImageIO.read(new File("src/br/controle_aereo/icones/aviao.png"));
             System.out.println("Carregou imagem.");
@@ -33,7 +32,6 @@ public class ThreadGrafico  {
         }
     }
 
-    
     public void run() {
         graph = frame.GetPainel().getGraphics();
         graph.drawLine(0, 200, 400, 200);
@@ -41,14 +39,13 @@ public class ThreadGrafico  {
         Double[] coordenadas = new Double[2];
 
         if (frame.isAlive()) {
-             graph.clearRect(0, 0, 400, 400);
+            graph.clearRect(0, 0, 400, 400);
             if (frame.isAcaoExclusao()) {
                 while (!frame.getFilaAcao().isEmpty()) {
                     ponto = new Pontos();
                     ponto = frame.getFilaAcao().poll();
                     coordenadas = normalizaPontos(ponto.getX(), ponto.getY());
-                   
-                    
+
                 }
                 frame.setAcaoExclusao(false);
             }
@@ -56,27 +53,20 @@ public class ThreadGrafico  {
             graph.drawLine(200, 0, 200, 400);
             for (int i = 0; i < frame.getModel().getRowCount(); i++) {
                 coordenadas = normalizaPontos(Double.parseDouble(frame.getModel().getValueAt(i, 2).toString().replace(",", ".")), Double.parseDouble(frame.getModel().getValueAt(i, 3).toString().replace(",", ".")));
-                inserePonto(coordenadas[0], coordenadas[1],Double.parseDouble(frame.getModel().getValueAt(i, 7).toString().replace(",", ".")));
-            }
-
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ThreadGrafico.class.getName()).log(Level.SEVERE, null, ex);
+                inserePonto(coordenadas[0], coordenadas[1], Double.parseDouble(frame.getModel().getValueAt(i, 7).toString().replace(",", ".")));
             }
         }
-        
+
     }
 
     public void inserePonto(Double x, Double y, double dir) {
 
-        double rotationRequired = Math.toRadians(360-dir);
-        double locationX = img.getWidth() / 2;
-        double locationY = img.getHeight() / 2;
-        AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY);
+        double Direcao = Math.toRadians(360 - dir);
+        double Localizacao_X = img.getWidth() / 2;
+        double Localizacao_Y = img.getHeight() / 2;
+        AffineTransform tx = AffineTransform.getRotateInstance(Direcao, Localizacao_X, Localizacao_Y);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
         graph.drawImage(op.filter(img, null), x.intValue() - 15, y.intValue() - 15, null);
-       
 
     }
 

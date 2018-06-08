@@ -5,27 +5,29 @@ public class Calculos {
     double[] resultado = new double[2];
 
     public double[] calculaPolar(double x, double y) {
-        double var1 = Math.pow(x, 2);
-        double var2 = Math.pow(y, 2);
-        resultado[0] = Math.sqrt(var1 + var2);
-
-        resultado[1] = Math.toDegrees((Math.atan2(y, x)));
-        
-        return resultado;
-    }
-
-    public double[] calculaCartesiano(double r, double ang) {
-        resultado[0] = r * Math.cos(Math.toRadians(ang));
-        resultado[1] = r * Math.sin(Math.toRadians(ang));
+        // Cálcula os valores de x e y ao quadradro
+        x = Math.pow(x, 2);
+        y = Math.pow(y, 2);
+        resultado[0] = Math.sqrt(x + y); // Soma os valores e tira a raiz, isso é o raio
+        resultado[1] = Math.toDegrees((Math.atan2(y, x))); // Realiza arcotangente de y dividido por x, isso é o ângulo
 
         return resultado;
     }
 
-    public double[] calculaRotacao(double x, double y, double ang, double X, double Y) {
-        x -= X;
-        y -= Y;
-        resultado[0] = (x * Math.cos(Math.toRadians(ang)) - y * Math.sin(Math.toRadians(ang)) + X );
-        resultado[1] = (y * Math.cos(Math.toRadians(ang)) + x * Math.sin(Math.toRadians(ang)) + Y );
+    public double[] calculaCartesiano(double raio, double angulo) {
+        resultado[0] = raio * Math.cos(Math.toRadians(angulo)); // Raio vezes o consseno do ângulo = X
+        resultado[1] = raio * Math.sin(Math.toRadians(angulo)); // Raio vezes o seno do ângulo = Y
+
+        return resultado;
+    }
+
+    public double[] calculaRotacao(double x, double y, double angulo, double Tx, double Ty) {
+        // Diminui o Tx e Ty
+        x -= Tx;
+        y -= Ty;
+        // Formula da rotação, adicionando o Tx e Ty no fim.
+        resultado[0] = (x * Math.cos(Math.toRadians(angulo)) - y * Math.sin(Math.toRadians(angulo)) + Tx);
+        resultado[1] = (y * Math.cos(Math.toRadians(angulo)) + x * Math.sin(Math.toRadians(angulo)) + Ty);
         return resultado;
     }
 
@@ -51,11 +53,11 @@ public class Calculos {
         return dist;
     }
 
-    public double[] calculaIntersecacao(double x1, double y1, double ang1, double x2, double y2, double ang2) {
+    public double[] calculaIntersecacao(double x1, double y1, double angulo1, double x2, double y2, double angulo2) {
         double x, y, m, m1;
 
-        m = Math.tan(Math.toRadians(ang1));
-        m1 = Math.tan(Math.toRadians(ang2));
+        m = Math.tan(Math.toRadians(angulo1));
+        m1 = Math.tan(Math.toRadians(angulo2));
 
         if (m == m1) {
             return null;
@@ -68,8 +70,8 @@ public class Calculos {
         }
     }
 
-    public double calculaTempo(double x1, double y1, double vel, double x2, double y2) {
+    public double calculaTempo(double x1, double y1, double velocidade, double x2, double y2) {
         double distancia = calculaDistanciaPontos(x1, y1, x2, y2);
-        return (distancia / vel) * 3600;
+        return (distancia / velocidade) * 3600;
     }
 }
