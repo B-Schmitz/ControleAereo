@@ -670,8 +670,11 @@ public class Principal extends javax.swing.JFrame {
             txt_Raio.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[0])));
             txt_Angulo.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[1])));
  
-            
-            Object data[] = new Object[]{false, model.getRowCount(), String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
+            int id = 0;
+            if(model.getRowCount() > 0){
+               id = (int) model.getValueAt(model.getRowCount()-1, 1) +1;
+            }
+            Object data[] = new Object[]{false, id, String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
             insereTabela(data);
             t.run();
         } catch (ExcecaoGeral e) {
@@ -745,6 +748,17 @@ public class Principal extends javax.swing.JFrame {
             getSelecionados();
             Double ang = v.verificaDouble(txt_angulo_rotacionar.getText().replaceAll(",", "."));
             Double X,Y;
+            if(txt_x_rotacionar.getText().isEmpty()){
+                
+                txt_x_rotacionar.setText("0");
+                
+            }
+            if(txt_y_rotacionar.getText().isEmpty()){
+                
+                txt_y_rotacionar.setText("0");
+                
+            }
+                  
             X = v.verificaDouble(txt_x_rotacionar.getText().replaceAll(",", "."));
             Y = v.verificaDouble(txt_y_rotacionar.getText().replaceAll(",", "."));
             for (Pontos p : filaCalculo) {

@@ -6,8 +6,6 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import br.controle_aereo.janelas.Principal;
 
@@ -53,13 +51,13 @@ public class Grafico {
             graph.drawLine(200, 0, 200, 400);
             for (int i = 0; i < frame.getModel().getRowCount(); i++) {
                 coordenadas = normalizaPontos(Double.parseDouble(frame.getModel().getValueAt(i, 2).toString().replace(",", ".")), Double.parseDouble(frame.getModel().getValueAt(i, 3).toString().replace(",", ".")));
-                inserePonto(coordenadas[0], coordenadas[1], Double.parseDouble(frame.getModel().getValueAt(i, 7).toString().replace(",", ".")));
+                inserePonto(coordenadas[0], coordenadas[1], Double.parseDouble(frame.getModel().getValueAt(i, 7).toString().replace(",", ".")),frame.getModel().getValueAt(i, 1).toString());
             }
         }
 
     }
 
-    public void inserePonto(Double x, Double y, double dir) {
+    public void inserePonto(Double x, Double y, double dir, String id) {
 
         double Direcao = Math.toRadians(360 - dir);
         double Localizacao_X = img.getWidth() / 2;
@@ -67,6 +65,7 @@ public class Grafico {
         AffineTransform tx = AffineTransform.getRotateInstance(Direcao, Localizacao_X, Localizacao_Y);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
         graph.drawImage(op.filter(img, null), x.intValue() - 15, y.intValue() - 15, null);
+        graph.drawString(id, x.intValue(), y.intValue()-12);
 
     }
 
