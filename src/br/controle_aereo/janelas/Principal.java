@@ -10,6 +10,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -87,6 +89,7 @@ public class Principal extends javax.swing.JFrame {
         label_Direcao = new javax.swing.JLabel();
         txt_Velocidade = new javax.swing.JTextField();
         txt_Direcao = new javax.swing.JTextField();
+        btn_converter = new javax.swing.JButton();
         Painel_Radar = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -111,11 +114,13 @@ public class Principal extends javax.swing.JFrame {
         txt_y_transladar = new javax.swing.JTextField();
         btn_transladar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menu_relatorios = new javax.swing.JMenu();
+        menu_aviaoes_aeroporto = new javax.swing.JMenuItem();
+        menu_aviaoes_proximos = new javax.swing.JMenuItem();
+        menu_tangente = new javax.swing.JMenuItem();
+        menu_colisoes = new javax.swing.JMenuItem();
+        menu_ajuda = new javax.swing.JMenu();
+        menu_sobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Controle Aéreo");
@@ -206,6 +211,7 @@ public class Principal extends javax.swing.JFrame {
         radiobutton_Cartesiana.setBackground(new java.awt.Color(0, 51, 102));
         buttonGroup1.add(radiobutton_Cartesiana);
         radiobutton_Cartesiana.setForeground(new java.awt.Color(255, 255, 255));
+        radiobutton_Cartesiana.setSelected(true);
         radiobutton_Cartesiana.setText("Cartesiana");
         radiobutton_Cartesiana.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,11 +244,6 @@ public class Principal extends javax.swing.JFrame {
         label_Angulo.setText("Ângulo:");
 
         txt_Angulo.setEnabled(false);
-        txt_Angulo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_AnguloFocusLost(evt);
-            }
-        });
 
         btn_inserir.setText("Inserir");
         btn_inserir.addActionListener(new java.awt.event.ActionListener() {
@@ -257,9 +258,10 @@ public class Principal extends javax.swing.JFrame {
         label_Direcao.setForeground(new java.awt.Color(255, 255, 255));
         label_Direcao.setText("Direção:");
 
-        txt_Direcao.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_DirecaoFocusLost(evt);
+        btn_converter.setText("Converter Coordenada");
+        btn_converter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_converterActionPerformed(evt);
             }
         });
 
@@ -268,42 +270,46 @@ public class Principal extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(btn_inserir, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(label_Y)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_Y, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(14, 14, 14)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(label_Y)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txt_Y, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(label_X)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txt_X, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(radiobutton_Cartesiana))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(radiobutton_Polar)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(label_X)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(label_Raio)
+                                    .addComponent(label_Angulo))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_Angulo)
+                                    .addComponent(txt_Raio, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(label_Velocidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(label_Direcao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_X, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(radiobutton_Cartesiana))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(radiobutton_Polar)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txt_Direcao)
+                                    .addComponent(txt_Velocidade, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(label_Raio)
-                            .addComponent(label_Angulo))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_Angulo)
-                            .addComponent(txt_Raio, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(label_Velocidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(label_Direcao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_Direcao)
-                            .addComponent(txt_Velocidade, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))))
+                        .addComponent(btn_inserir, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_converter)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -340,8 +346,11 @@ public class Principal extends javax.swing.JFrame {
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txt_Angulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(label_Angulo))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(btn_inserir))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_inserir)
+                    .addComponent(btn_converter))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Painel_Radar.setPreferredSize(new java.awt.Dimension(400, 400));
@@ -368,12 +377,6 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Y:");
-
-        txt_y_escalar.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_y_escalarFocusLost(evt);
-            }
-        });
 
         btn_escalar.setText("OK");
         btn_escalar.addActionListener(new java.awt.event.ActionListener() {
@@ -485,12 +488,6 @@ public class Principal extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Y:");
 
-        txt_y_transladar.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_y_transladarFocusLost(evt);
-            }
-        });
-
         btn_transladar.setText("OK");
         btn_transladar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -585,41 +582,48 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Relatórios");
+        menu_relatorios.setText("Relatórios");
 
-        jMenuItem1.setText("Aviões Próximos ao Aeroporto");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menu_aviaoes_aeroporto.setText("Aviões Próximos ao Aeroporto");
+        menu_aviaoes_aeroporto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menu_aviaoes_aeroportoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        menu_relatorios.add(menu_aviaoes_aeroporto);
 
-        jMenuItem2.setText("Aviões Próximos");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menu_aviaoes_proximos.setText("Aviões Próximos");
+        menu_aviaoes_proximos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menu_aviaoes_proximosActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        menu_relatorios.add(menu_aviaoes_proximos);
 
-        jMenuItem3.setText("Tangente");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menu_tangente.setText("Tangente");
+        menu_tangente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menu_tangenteActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        menu_relatorios.add(menu_tangente);
 
-        jMenuItem4.setText("Colisões");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menu_colisoes.setText("Colisões");
+        menu_colisoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menu_colisoesActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        menu_relatorios.add(menu_colisoes);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menu_relatorios);
+
+        menu_ajuda.setText("Ajuda");
+
+        menu_sobre.setText("Sobre");
+        menu_ajuda.add(menu_sobre);
+
+        jMenuBar1.add(menu_ajuda);
 
         setJMenuBar(jMenuBar1);
 
@@ -656,30 +660,16 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_radiobutton_PolarActionPerformed
 
     private void btn_inserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inserirActionPerformed
-        
-        try {
-            
-            x = v.verificaDouble(txt_X.getText().replaceAll(",", "."));
-            y = v.verificaDouble(txt_Y.getText().replaceAll(",", "."));
-            vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
-            dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
 
-            resultado = cal.calculaPolar(x, y);
-            r = resultado[0];
-            ang = resultado[1];
-            txt_Raio.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[0])));
-            txt_Angulo.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[1])));
- 
-            int id = 0;
-            if(model.getRowCount() > 0){
-               id = (int) model.getValueAt(model.getRowCount()-1, 1) +1;
-            }
-            Object data[] = new Object[]{false, id, String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
-            insereTabela(data);
-            t.run();
-        } catch (ExcecaoGeral e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
+        btn_converter.doClick();
+
+        int id = 0;
+        if (model.getRowCount() > 0) {
+            id = (int) model.getValueAt(model.getRowCount() - 1, 1) + 1;
         }
+        Object data[] = new Object[]{false, id, String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
+        insereTabela(data);
+        t.run();
 
 
     }//GEN-LAST:event_btn_inserirActionPerformed
@@ -692,33 +682,8 @@ public class Principal extends javax.swing.JFrame {
         model.addRow(data);
     }
 
-    private void txt_AnguloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_AnguloFocusLost
-
-        try {
-            r = v.verificaDouble(txt_Raio.getText().replaceAll(",", "."));
-            ang = v.verificaDouble(txt_Angulo.getText().replaceAll(",", "."));
-
-            resultado = cal.calculaCartesiano(r, ang);
-            txt_X.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[0])));
-            txt_Y.setText(String.valueOf(new DecimalFormat("#.00").format(resultado[1])));
-
-            x = resultado[0];
-            y = resultado[1];
-        } catch (ExcecaoGeral e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_txt_AnguloFocusLost
-
-    private void txt_y_escalarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_y_escalarFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_y_escalarFocusLost
-
-    private void txt_y_transladarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_y_transladarFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_y_transladarFocusLost
-
     private void btn_escalarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_escalarActionPerformed
-        // TODO add your handling code here:
+
         try {
             getSelecionados();
             double Sx = v.verificaDouble(txt_x_escalar.getText().replaceAll(",", "."));
@@ -743,22 +708,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_escalarActionPerformed
 
     private void btn_rotacionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rotacionarActionPerformed
-       
+
         try {
             getSelecionados();
             Double ang = v.verificaDouble(txt_angulo_rotacionar.getText().replaceAll(",", "."));
-            Double X,Y;
-            if(txt_x_rotacionar.getText().isEmpty()){
-                
+            Double X, Y;
+            if (txt_x_rotacionar.getText().isEmpty()) {
+
                 txt_x_rotacionar.setText("0");
-                
+
             }
-            if(txt_y_rotacionar.getText().isEmpty()){
-                
+            if (txt_y_rotacionar.getText().isEmpty()) {
+
                 txt_y_rotacionar.setText("0");
-                
+
             }
-                  
+
             X = v.verificaDouble(txt_x_rotacionar.getText().replaceAll(",", "."));
             Y = v.verificaDouble(txt_y_rotacionar.getText().replaceAll(",", "."));
             for (Pontos p : filaCalculo) {
@@ -778,12 +743,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_rotacionarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+
         ativo = false;
     }//GEN-LAST:event_formWindowClosing
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
-        // TODO add your handling code here:
 
         System.out.println("teste");
         getSelecionados();
@@ -819,7 +783,7 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_transladarActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menu_aviaoes_aeroportoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_aviaoes_aeroportoActionPerformed
         // TODO add your handling code here:
         double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe a distância de parâmetro em km.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
         getTodos();
@@ -829,23 +793,25 @@ public class Principal extends javax.swing.JFrame {
                 str += p.getId() + " - " + p.getR() + " km\n";
             }
         }
-        JOptionPane.showMessageDialog(null, "Os aviões abaixo estão próximos do aeroporto:\n" + str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        JOptionPane.showMessageDialog(null, "Aviões  próximos ao aeroporto:\n" + str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_menu_aviaoes_aeroportoActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+    private void menu_aviaoes_proximosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_aviaoes_proximosActionPerformed
+
         getTodos();
         String str = "", str2 = "";
         Pontos p1, p2;
         double dist;
+        DecimalFormat decimal = new DecimalFormat("#.000");
 
         for (int i = 0; i < arrayPontos.size() - 1; i++) {
             p1 = arrayPontos.get(i);
             str2 = p1.getId() + ":\n";
             for (int j = i + 1; j < arrayPontos.size(); j++) {
                 p2 = arrayPontos.get(j);
+
                 dist = cal.calculaDistanciaPontos(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-                str2 += p2.getId() + " - " + dist + " km\n";
+                str2 += p2.getId() + " - " + decimal.format(dist) + " km\n";
 
             }
             str += str2;
@@ -853,21 +819,16 @@ public class Principal extends javax.swing.JFrame {
 
         System.out.println(str);
         JOptionPane.showMessageDialog(null, str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_menu_aviaoes_proximosActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+    private void menu_tangenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tangenteActionPerformed
         double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe o angulo.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
 
         JOptionPane.showMessageDialog(null, Math.tan(Math.toRadians(par)));
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menu_tangenteActionPerformed
 
-    private void txt_DirecaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_DirecaoFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_DirecaoFocusLost
+    private void menu_colisoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_colisoesActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
         double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe o tempo.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
 
         getTodos();
@@ -901,7 +862,7 @@ public class Principal extends javax.swing.JFrame {
             str += str2;
         }
         JOptionPane.showMessageDialog(null, str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_menu_colisoesActionPerformed
 
     private void btn_selecionar_todosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_selecionar_todosActionPerformed
 
@@ -918,6 +879,42 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btn_selecionar_todosActionPerformed
+
+    private void btn_converterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_converterActionPerformed
+
+        if (radiobutton_Cartesiana.isSelected()) {
+            try {
+
+                x = v.verificaDouble(txt_X.getText().replaceAll(",", "."));
+                y = v.verificaDouble(txt_Y.getText().replaceAll(",", "."));
+                vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
+                dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
+
+                resultado = cal.calculaPolar(x, y);
+                r = resultado[0];
+                ang = resultado[1];
+                txt_Raio.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[0])));
+                txt_Angulo.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[1])));
+            } catch (ExcecaoGeral ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            try {
+                r = v.verificaDouble(txt_Raio.getText().replaceAll(",", "."));
+                ang = v.verificaDouble(txt_Angulo.getText().replaceAll(",", "."));
+                vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
+                dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
+                resultado = cal.calculaCartesiano(r, ang);
+                x = resultado[0];
+                y = resultado[1];
+                txt_X.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[0])));
+                txt_Y.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[1])));
+            } catch (ExcecaoGeral ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btn_converterActionPerformed
 
     public void insereValorFormatado(double valor, int row, int column) {
         String vForm = String.valueOf(new DecimalFormat("#.00").format(valor));
@@ -998,6 +995,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Painel_Radar;
+    private javax.swing.JButton btn_converter;
     private javax.swing.JButton btn_escalar;
     private javax.swing.JButton btn_excluir;
     private javax.swing.JButton btn_inserir;
@@ -1013,12 +1011,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1032,6 +1025,13 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel label_Velocidade;
     private javax.swing.JLabel label_X;
     private javax.swing.JLabel label_Y;
+    private javax.swing.JMenu menu_ajuda;
+    private javax.swing.JMenuItem menu_aviaoes_aeroporto;
+    private javax.swing.JMenuItem menu_aviaoes_proximos;
+    private javax.swing.JMenuItem menu_colisoes;
+    private javax.swing.JMenu menu_relatorios;
+    private javax.swing.JMenuItem menu_sobre;
+    private javax.swing.JMenuItem menu_tangente;
     private javax.swing.JPanel painel_principal;
     private javax.swing.JRadioButton radiobutton_Cartesiana;
     private javax.swing.JRadioButton radiobutton_Polar;

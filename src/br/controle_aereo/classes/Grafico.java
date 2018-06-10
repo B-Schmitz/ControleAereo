@@ -24,7 +24,6 @@ public class Grafico {
     public final void Carregar_Imagem() {
         try {
             img = ImageIO.read(new File("src/br/controle_aereo/icones/aviao.png"));
-            System.out.println("Carregou imagem.");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -51,7 +50,7 @@ public class Grafico {
             graph.drawLine(200, 0, 200, 400);
             for (int i = 0; i < frame.getModel().getRowCount(); i++) {
                 coordenadas = normalizaPontos(Double.parseDouble(frame.getModel().getValueAt(i, 2).toString().replace(",", ".")), Double.parseDouble(frame.getModel().getValueAt(i, 3).toString().replace(",", ".")));
-                inserePonto(coordenadas[0], coordenadas[1], Double.parseDouble(frame.getModel().getValueAt(i, 7).toString().replace(",", ".")),frame.getModel().getValueAt(i, 1).toString());
+                inserePonto(coordenadas[0], coordenadas[1], Double.parseDouble(frame.getModel().getValueAt(i, 7).toString().replace(",", ".")), frame.getModel().getValueAt(i, 1).toString());
             }
         }
 
@@ -65,7 +64,7 @@ public class Grafico {
         AffineTransform tx = AffineTransform.getRotateInstance(Direcao, Localizacao_X, Localizacao_Y);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
         graph.drawImage(op.filter(img, null), x.intValue() - 15, y.intValue() - 15, null);
-        graph.drawString(id, x.intValue(), y.intValue()-12);
+        graph.drawString(id, x.intValue(), y.intValue() - 12);
 
     }
 
