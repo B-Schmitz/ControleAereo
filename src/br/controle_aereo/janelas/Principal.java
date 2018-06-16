@@ -841,7 +841,7 @@ public class Principal extends javax.swing.JFrame {
             str2 = p1.getId() + ":\n";
             for (int j = i + 1; j < arrayPontos.size(); j++) {
                 p2 = arrayPontos.get(j);
-                resultado = cal.calculaIntersecacao(p1.getX(), p1.getY(), p1.getAng(), p2.getX(), p2.getY(), p2.getAng());
+                resultado = cal.calculaIntersecacao(p1.getX(), p1.getY(), p1.getDir(), p2.getX(), p2.getY(), p2.getDir());
                 if (resultado == null) {
                     str2 += p2.getId() + " - Não se cruzam.\n";
                 } else {
