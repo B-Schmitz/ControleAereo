@@ -166,14 +166,18 @@ public class Principal extends javax.swing.JFrame {
             tabela_Datagrid.getColumnModel().getColumn(0).setPreferredWidth(30);
         }
 
+        btn_excluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/controle_aereo/icones/deletar.png"))); // NOI18N
         btn_excluir.setText("Excluir");
+        btn_excluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_excluirActionPerformed(evt);
             }
         });
 
+        btn_selecionar_todos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/controle_aereo/icones/selecionar.png"))); // NOI18N
         btn_selecionar_todos.setText("Selecionar Todos");
+        btn_selecionar_todos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_selecionar_todos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_selecionar_todosActionPerformed(evt);
@@ -187,12 +191,12 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 592, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_selecionar_todos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -245,7 +249,9 @@ public class Principal extends javax.swing.JFrame {
 
         txt_Angulo.setEnabled(false);
 
+        btn_inserir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/controle_aereo/icones/adicionar.png"))); // NOI18N
         btn_inserir.setText("Inserir");
+        btn_inserir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_inserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_inserirActionPerformed(evt);
@@ -258,7 +264,9 @@ public class Principal extends javax.swing.JFrame {
         label_Direcao.setForeground(new java.awt.Color(255, 255, 255));
         label_Direcao.setText("Direção:");
 
+        btn_converter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/controle_aereo/icones/converter.png"))); // NOI18N
         btn_converter.setText("Converter Coordenada");
+        btn_converter.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_converter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_converterActionPerformed(evt);
@@ -285,7 +293,7 @@ public class Principal extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txt_X, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(radiobutton_Cartesiana))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(radiobutton_Polar)
                             .addGroup(jPanel6Layout.createSequentialGroup()
@@ -379,6 +387,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel7.setText("Y:");
 
         btn_escalar.setText("OK");
+        btn_escalar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_escalar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_escalarActionPerformed(evt);
@@ -424,6 +433,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel8.setText("Ângulo:");
 
         btn_rotacionar.setText("OK");
+        btn_rotacionar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_rotacionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_rotacionarActionPerformed(evt);
@@ -489,6 +499,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel10.setText("Y:");
 
         btn_transladar.setText("OK");
+        btn_transladar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_transladar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_transladarActionPerformed(evt);
@@ -582,9 +593,12 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        menu_relatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/controle_aereo/icones/relatorio.png"))); // NOI18N
         menu_relatorios.setText("Relatórios");
+        menu_relatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         menu_aviaoes_aeroporto.setText("Aviões Próximos ao Aeroporto");
+        menu_aviaoes_aeroporto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_aviaoes_aeroporto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_aviaoes_aeroportoActionPerformed(evt);
@@ -593,6 +607,7 @@ public class Principal extends javax.swing.JFrame {
         menu_relatorios.add(menu_aviaoes_aeroporto);
 
         menu_aviaoes_proximos.setText("Aviões Próximos");
+        menu_aviaoes_proximos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_aviaoes_proximos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_aviaoes_proximosActionPerformed(evt);
@@ -601,6 +616,7 @@ public class Principal extends javax.swing.JFrame {
         menu_relatorios.add(menu_aviaoes_proximos);
 
         menu_tangente.setText("Tangente");
+        menu_tangente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_tangente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_tangenteActionPerformed(evt);
@@ -609,6 +625,7 @@ public class Principal extends javax.swing.JFrame {
         menu_relatorios.add(menu_tangente);
 
         menu_colisoes.setText("Colisões");
+        menu_colisoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_colisoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_colisoesActionPerformed(evt);
@@ -618,9 +635,17 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(menu_relatorios);
 
+        menu_ajuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/controle_aereo/icones/ajuda.png"))); // NOI18N
         menu_ajuda.setText("Ajuda");
+        menu_ajuda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         menu_sobre.setText("Sobre");
+        menu_sobre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        menu_sobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_sobreActionPerformed(evt);
+            }
+        });
         menu_ajuda.add(menu_sobre);
 
         jMenuBar1.add(menu_ajuda);
@@ -633,7 +658,7 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painel_principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -644,7 +669,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void radiobutton_CartesianaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiobutton_CartesianaActionPerformed
-        // TODO add your handling code here:
+
         txt_X.setEnabled(true);
         txt_Y.setEnabled(true);
         txt_Raio.setEnabled(false);
@@ -652,7 +677,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_radiobutton_CartesianaActionPerformed
 
     private void radiobutton_PolarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiobutton_PolarActionPerformed
-        // TODO add your handling code here:
+
         txt_X.setEnabled(false);
         txt_Y.setEnabled(false);
         txt_Raio.setEnabled(true);
@@ -660,16 +685,26 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_radiobutton_PolarActionPerformed
 
     private void btn_inserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inserirActionPerformed
-
         btn_converter.doClick();
+        if (VerificaCampos()) {
 
-        int id = 0;
-        if (model.getRowCount() > 0) {
-            id = (int) model.getValueAt(model.getRowCount() - 1, 1) + 1;
+            try {
+                vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
+                dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
+            } catch (ExcecaoGeral ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            int id = 0;
+            if (model.getRowCount() > 0) {
+                id = (int) model.getValueAt(model.getRowCount() - 1, 1) + 1;
+            }
+            Object data[] = new Object[]{false, id, String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
+            insereTabela(data);
+            t.run();
+        } else {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", 0);
         }
-        Object data[] = new Object[]{false, id, String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
-        insereTabela(data);
-        t.run();
 
 
     }//GEN-LAST:event_btn_inserirActionPerformed
@@ -887,9 +922,6 @@ public class Principal extends javax.swing.JFrame {
 
                 x = v.verificaDouble(txt_X.getText().replaceAll(",", "."));
                 y = v.verificaDouble(txt_Y.getText().replaceAll(",", "."));
-                vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
-                dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
-
                 resultado = cal.calculaPolar(x, y);
                 r = resultado[0];
                 ang = resultado[1];
@@ -903,8 +935,6 @@ public class Principal extends javax.swing.JFrame {
             try {
                 r = v.verificaDouble(txt_Raio.getText().replaceAll(",", "."));
                 ang = v.verificaDouble(txt_Angulo.getText().replaceAll(",", "."));
-                vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
-                dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
                 resultado = cal.calculaCartesiano(r, ang);
                 x = resultado[0];
                 y = resultado[1];
@@ -915,6 +945,10 @@ public class Principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btn_converterActionPerformed
+
+    private void menu_sobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_sobreActionPerformed
+        JOptionPane.showMessageDialog(null, "O Projeto proposto pelo professor Giácomo Antônio Althoff Bolan, tem como propósito, usar a matemática e a computação gráfica\npara proteger vidas de possíveis acidentes aéreos.\n\nAutores: Bernardo, Michael\nVersão 1.0\n\n\tUniversidade do Extremo Sul de Santa Catarina (UNESC)", "Sobre", 1);
+    }//GEN-LAST:event_menu_sobreActionPerformed
 
     public void insereValorFormatado(double valor, int row, int column) {
         String vForm = String.valueOf(new DecimalFormat("#.00").format(valor));
@@ -960,6 +994,15 @@ public class Principal extends javax.swing.JFrame {
 
             arrayPontos.add(ponto);
         }
+    }
+
+    public boolean VerificaCampos() {
+        return !(txt_X.getText().trim().isEmpty()
+                || txt_Y.getText().isEmpty()
+                || txt_Raio.getText().trim().isEmpty()
+                || txt_Angulo.getText().trim().isEmpty()
+                || txt_Velocidade.getText().trim().isEmpty()
+                || txt_Direcao.getText().trim().isEmpty());
     }
 
     /**
@@ -1050,4 +1093,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField txt_y_rotacionar;
     private javax.swing.JTextField txt_y_transladar;
     // End of variables declaration//GEN-END:variables
+
 }
