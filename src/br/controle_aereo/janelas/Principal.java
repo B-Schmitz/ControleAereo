@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -685,27 +686,23 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_radiobutton_PolarActionPerformed
 
     private void btn_inserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inserirActionPerformed
-        btn_converter.doClick();
-        if (VerificaCampos()) {
 
-            try {
-                vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
-                dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
-            } catch (ExcecaoGeral ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if (Converte()) {
 
-            int id = 0;
-            if (model.getRowCount() > 0) {
-                id = (int) model.getValueAt(model.getRowCount() - 1, 1) + 1;
+            if (VerificaCampos()) {
+
+                int id = 0;
+                if (model.getRowCount() > 0) {
+                    id = (int) model.getValueAt(model.getRowCount() - 1, 1) + 1;
+                }
+                Object data[] = new Object[]{false, id, String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
+                insereTabela(data);
+                t.run();
+            } else {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", 0);
+
             }
-            Object data[] = new Object[]{false, id, String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
-            insereTabela(data);
-            t.run();
-        } else {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", 0);
         }
-
 
     }//GEN-LAST:event_btn_inserirActionPerformed
 
@@ -784,7 +781,6 @@ public class Principal extends javax.swing.JFrame {
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
 
-        System.out.println("teste");
         getSelecionados();
 
         int size = filaCalculo.size();
@@ -819,7 +815,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_transladarActionPerformed
 
     private void menu_aviaoes_aeroportoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_aviaoes_aeroportoActionPerformed
-        // TODO add your handling code here:
+
         double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe a distância de parâmetro em km.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
         getTodos();
         String str = "";
@@ -828,7 +824,12 @@ public class Principal extends javax.swing.JFrame {
                 str += p.getId() + " - " + p.getR() + " km\n";
             }
         }
+        
+        if("".equals(str)){
+             JOptionPane.showMessageDialog(null, "Não há aviões próximos ao aeroporto nesta distância", "Relatório",  JOptionPane.INFORMATION_MESSAGE);
+          }else{
         JOptionPane.showMessageDialog(null, "Aviões  próximos ao aeroporto:\n" + str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_menu_aviaoes_aeroportoActionPerformed
 
     private void menu_aviaoes_proximosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_aviaoes_proximosActionPerformed
@@ -870,6 +871,7 @@ public class Principal extends javax.swing.JFrame {
         String str = "", str2 = "";
         Pontos p1, p2;
         double t1, t2, dif;
+        DecimalFormat decimal = new DecimalFormat( "0.0000" );
 
         for (int i = 0; i < arrayPontos.size() - 1; i++) {
             p1 = arrayPontos.get(i);
@@ -889,7 +891,7 @@ public class Principal extends javax.swing.JFrame {
                     System.out.println(t2);
                     System.out.println(dif);
                     if (Math.abs(dif) < par) {
-                        str2 += p2.getId() + " - Vão passar pelo mesmo ponto com intervalo de " + Math.abs(dif) + "s.\n";
+                        str2 += p2.getId() + " - Vão passar pelo mesmo ponto com intervalo de " + (decimal.format(Math.abs(dif))) + "s.\n";
                     }
                 }
 
@@ -915,35 +917,46 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_selecionar_todosActionPerformed
 
-    private void btn_converterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_converterActionPerformed
-
+    public boolean Converte() {
         if (radiobutton_Cartesiana.isSelected()) {
             try {
-
                 x = v.verificaDouble(txt_X.getText().replaceAll(",", "."));
                 y = v.verificaDouble(txt_Y.getText().replaceAll(",", "."));
+                vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
+                dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
                 resultado = cal.calculaPolar(x, y);
                 r = resultado[0];
                 ang = resultado[1];
                 txt_Raio.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[0])));
                 txt_Angulo.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[1])));
             } catch (ExcecaoGeral ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Formato errado!", "Erro", 0);
+                return false;
             }
 
         } else {
             try {
                 r = v.verificaDouble(txt_Raio.getText().replaceAll(",", "."));
                 ang = v.verificaDouble(txt_Angulo.getText().replaceAll(",", "."));
+                vel = v.verificaDouble(txt_Velocidade.getText().replaceAll(",", "."));
+                dir = v.verificaDouble(txt_Direcao.getText().replaceAll(",", "."));
                 resultado = cal.calculaCartesiano(r, ang);
                 x = resultado[0];
                 y = resultado[1];
                 txt_X.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[0])));
                 txt_Y.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[1])));
             } catch (ExcecaoGeral ex) {
-                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Formato errado!", "Erro", 0);
+                return false;
             }
         }
+        return true;
+    }
+
+
+    private void btn_converterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_converterActionPerformed
+        Converte();
+
     }//GEN-LAST:event_btn_converterActionPerformed
 
     private void menu_sobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_sobreActionPerformed

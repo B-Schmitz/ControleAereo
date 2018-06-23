@@ -1,5 +1,7 @@
 package br.controle_aereo.classes;
 
+import java.util.Objects;
+
 public class Calculos {
 
     double[] resultado = new double[2];
@@ -74,39 +76,23 @@ public class Calculos {
         m2 = Math.tan(Math.toRadians(dir2));
         
          System.out.println("Coeficiente m1: " + m1 + "Coeficiente m2: " + m2);
-        //System.out.println("m = "+ m + " m1 = " +m1);
 
-       // if (Objects.equals(m1, m2)) {
-       //     return null;
-       // } //else {
+        if (Objects.equals(m1, m2)) {
+            return null;
+       } 
             if(dir1 != 90 && dir1 != 270){
             linear1 = y1 - (m1 * x1);
             linear2 = y2 - (m2 * x2);
             System.out.println("Coeficiente linear1: " + linear1 + "Coeficiente linear2: " + linear2);
-            x1 = x1 * linear1;
-            x2 = x2 * linear2;
-            x = (linear1 - linear2)/(x1 - x2);
-                System.out.println("X : " + x);
+            x = (linear2 - linear1)/(m1 - m2);
             y = m1 * x + linear1;
+                System.out.println("X : " + x);
                 System.out.println("Y : " + y);
+                
+                resultado[0] = x;
+                resultado[1] = y;
             }
-            //Double difY;
-            
-            //difY = y1 -linear1;
-            
-           // if(difY != 0){
-            //resultado[0] =  x1/difY;}
-           // else{
-           //  resultado[0] = 1;   
-           // }
-            
-                //System.out.println("Proporção: " + resultado[0]);
-            
-           // }
-           /* x = ((m * x1 + y1 - y2) + (m1 * x2)) / (m1 - m);
-            y = ((m * x) - (m * x1)) + y1;
-            resultado[0] = x;
-            resultado[1] = y;*/
+           
     return resultado;
     }
 
