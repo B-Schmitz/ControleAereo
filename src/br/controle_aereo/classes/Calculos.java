@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Calculos {
 
-    double[] resultado = new double[2];
+   private final double[] resultado = new double[2];
 
     public double[] calculaPolar(double x, double y) {
         // Cálcula os valores de x e y ao quadradro

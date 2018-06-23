@@ -4,15 +4,12 @@ import br.controle_aereo.classes.Calculos;
 import br.controle_aereo.classes.Pontos;
 import br.controle_aereo.classes.Grafico;
 import br.controle_aereo.classes.Verifica;
-import br.controle_aereo.excecoes.ExcecaoGeral;
+import br.controle_aereo.excecoes.ExcecaoErro;
 import java.awt.Graphics;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Optional;
 import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -462,17 +459,18 @@ public class Principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(txt_x_rotacionar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_y_rotacionar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_x_rotacionar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_y_rotacionar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(btn_rotacionar)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(134, 134, 134))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -721,19 +719,29 @@ public class Principal extends javax.swing.JFrame {
             double Sx = v.verificaDouble(txt_x_escalar.getText().replaceAll(",", "."));
             double Sy = v.verificaDouble(txt_y_escalar.getText().replaceAll(",", "."));
 
-            for (Pontos p : filaCalculo) {
+            filaCalculo.stream().map((p) -> {
                 resultado = cal.calculaEscala(p.getX(), p.getY(), Sx, Sy);
+                return p;
+            }).map((p) -> {
                 insereValorFormatado(resultado[0], p.getLinha(), 2);
+                return p;
+            }).map((p) -> {
                 insereValorFormatado(resultado[1], p.getLinha(), 3);
+                return p;
+            }).map((p) -> {
                 resultado = cal.calculaPolar(resultado[0], resultado[1]);
+                return p;
+            }).map((p) -> {
                 insereValorFormatado(resultado[0], p.getLinha(), 4);
+                return p;
+            }).forEachOrdered((p) -> {
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
-            }
+            });
 
             t.run();
             filaCalculo.clear();
 
-        } catch (ExcecaoGeral e) {
+        } catch (ExcecaoErro e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -743,7 +751,7 @@ public class Principal extends javax.swing.JFrame {
 
         try {
             getSelecionados();
-            Double ang = v.verificaDouble(txt_angulo_rotacionar.getText().replaceAll(",", "."));
+            Double angulo = v.verificaDouble(txt_angulo_rotacionar.getText().replaceAll(",", "."));
             Double X, Y;
             if (txt_x_rotacionar.getText().isEmpty()) {
 
@@ -753,22 +761,30 @@ public class Principal extends javax.swing.JFrame {
             if (txt_y_rotacionar.getText().isEmpty()) {
 
                 txt_y_rotacionar.setText("0");
-
             }
-
             X = v.verificaDouble(txt_x_rotacionar.getText().replaceAll(",", "."));
             Y = v.verificaDouble(txt_y_rotacionar.getText().replaceAll(",", "."));
-            for (Pontos p : filaCalculo) {
-                resultado = cal.calculaRotacao(p.getX(), p.getY(), ang, X, Y);
+            filaCalculo.stream().map((p) -> {
+                resultado = cal.calculaRotacao(p.getX(), p.getY(), angulo, X, Y);
+                return p;
+            }).map((p) -> {
                 insereValorFormatado(resultado[0], p.getLinha(), 2);
+                return p;
+            }).map((p) -> {
                 insereValorFormatado(resultado[1], p.getLinha(), 3);
+                return p;
+            }).map((p) -> {
                 resultado = cal.calculaPolar(resultado[0], resultado[1]);
+                return p;
+            }).map((p) -> {
                 insereValorFormatado(resultado[0], p.getLinha(), 4);
+                return p;
+            }).forEachOrdered((p) -> {
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
-            }
+            });
             t.run();
             filaCalculo.clear();
-        } catch (ExcecaoGeral e) {
+        } catch (ExcecaoErro e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -780,7 +796,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void btn_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluirActionPerformed
-
         getSelecionados();
 
         int size = filaCalculo.size();
@@ -792,7 +807,6 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_excluirActionPerformed
 
     private void btn_transladarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transladarActionPerformed
-        // TODO add your handling code here:
         try {
             getSelecionados();
             double Tx = v.verificaDouble(txt_x_transladar.getText().replaceAll(",", "."));
@@ -808,7 +822,7 @@ public class Principal extends javax.swing.JFrame {
             }
             t.run();
             filaCalculo.clear();
-        } catch (ExcecaoGeral e) {
+        } catch (ExcecaoErro e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -821,14 +835,14 @@ public class Principal extends javax.swing.JFrame {
         String str = "";
         for (Pontos p : arrayPontos) {
             if (p.getR() < par) {
-                str += p.getId() + " - " + p.getR() + " km\n";
+                str += "Avião " + p.getId() + " está a " + p.getR() + " km " +"de distância\n";
             }
         }
-        
-        if("".equals(str)){
-             JOptionPane.showMessageDialog(null, "Não há aviões próximos ao aeroporto nesta distância", "Relatório",  JOptionPane.INFORMATION_MESSAGE);
-          }else{
-        JOptionPane.showMessageDialog(null, "Aviões  próximos ao aeroporto:\n" + str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
+
+        if ("".equals(str)) {
+            JOptionPane.showMessageDialog(null, "Não há aviões próximos ao aeroporto nesta distância", "Relatório", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Aviões  próximos ao aeroporto:\n" + str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_menu_aviaoes_aeroportoActionPerformed
 
@@ -842,19 +856,25 @@ public class Principal extends javax.swing.JFrame {
 
         for (int i = 0; i < arrayPontos.size() - 1; i++) {
             p1 = arrayPontos.get(i);
-            str2 = p1.getId() + ":\n";
+            str2 = "\nAvião " + p1.getId() + "\n\t";
             for (int j = i + 1; j < arrayPontos.size(); j++) {
                 p2 = arrayPontos.get(j);
+                
 
                 dist = cal.calculaDistanciaPontos(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-                str2 += p2.getId() + " - " + decimal.format(dist) + " km\n";
+                str2 += decimal.format(dist) + "km " + "do " + "Avião " + p2.getId() + "\n";
 
             }
             str += str2;
         }
 
         System.out.println(str);
-        JOptionPane.showMessageDialog(null, str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
+
+        if ("".equals(str)) {
+            JOptionPane.showMessageDialog(null, "Não há aviões próximos uns aos outros", "Relatório", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_menu_aviaoes_proximosActionPerformed
 
     private void menu_tangenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tangenteActionPerformed
@@ -871,11 +891,11 @@ public class Principal extends javax.swing.JFrame {
         String str = "", str2 = "";
         Pontos p1, p2;
         double t1, t2, dif;
-        DecimalFormat decimal = new DecimalFormat( "0.0000" );
+        DecimalFormat decimal = new DecimalFormat("0.0000");
 
         for (int i = 0; i < arrayPontos.size() - 1; i++) {
             p1 = arrayPontos.get(i);
-            str2 = p1.getId() + ":\n";
+            str2 = "\nAvião " + p1.getId() + ":\n";
             for (int j = i + 1; j < arrayPontos.size(); j++) {
                 p2 = arrayPontos.get(j);
                 resultado = cal.calculaIntersecacao(p1.getX(), p1.getY(), p1.getDir(), p2.getX(), p2.getY(), p2.getDir());
@@ -891,7 +911,7 @@ public class Principal extends javax.swing.JFrame {
                     System.out.println(t2);
                     System.out.println(dif);
                     if (Math.abs(dif) < par) {
-                        str2 += p2.getId() + " - Vão passar pelo mesmo ponto com intervalo de " + (decimal.format(Math.abs(dif))) + "s.\n";
+                        str2 += "Avião " + p2.getId() + " - Vão passar pelo mesmo ponto com intervalo de " + (decimal.format(Math.abs(dif))) + "s.\n";
                     }
                 }
 
@@ -929,7 +949,7 @@ public class Principal extends javax.swing.JFrame {
                 ang = resultado[1];
                 txt_Raio.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[0])));
                 txt_Angulo.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[1])));
-            } catch (ExcecaoGeral ex) {
+            } catch (ExcecaoErro ex) {
                 JOptionPane.showMessageDialog(null, "Formato errado!", "Erro", 0);
                 return false;
             }
@@ -945,7 +965,7 @@ public class Principal extends javax.swing.JFrame {
                 y = resultado[1];
                 txt_X.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[0])));
                 txt_Y.setText(String.valueOf(new DecimalFormat("0.00").format(resultado[1])));
-            } catch (ExcecaoGeral ex) {
+            } catch (ExcecaoErro ex) {
                 JOptionPane.showMessageDialog(null, "Formato errado!", "Erro", 0);
                 return false;
             }
@@ -953,14 +973,12 @@ public class Principal extends javax.swing.JFrame {
         return true;
     }
 
-
     private void btn_converterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_converterActionPerformed
         Converte();
-
     }//GEN-LAST:event_btn_converterActionPerformed
 
     private void menu_sobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_sobreActionPerformed
-        JOptionPane.showMessageDialog(null, "O Projeto proposto pelo professor Giácomo Antônio Althoff Bolan, tem como propósito, usar a matemática e a computação gráfica\npara proteger vidas de possíveis acidentes aéreos.\n\nAutores: Bernardo, Michael\nVersão 1.0\n\n\tUniversidade do Extremo Sul de Santa Catarina (UNESC)", "Sobre", 1);
+        JOptionPane.showMessageDialog(null, "O Projeto proposto pelo professor Giácomo Antônio Althoff Bolan, tem como propósito, usar a matemática e a computação gráfica\npara proteger vidas de possíveis acidentes aéreos.\n\nAutores: Bernardo, Michael\nVersão 1.2\nData: 29/06/2018\n\n\nEmails:\nbernardo_schmitz@live.com\nmb-nascimento@hotmail.com\n\nUniversidade do Extremo Sul de Santa Catarina (UNESC)", "Sobre", 1);
     }//GEN-LAST:event_menu_sobreActionPerformed
 
     public void insereValorFormatado(double valor, int row, int column) {

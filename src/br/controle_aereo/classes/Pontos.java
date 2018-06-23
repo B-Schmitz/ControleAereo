@@ -2,8 +2,8 @@ package br.controle_aereo.classes;
 
 public class Pontos {
 
-    Double x, y, raio, angulo, velocidade, direcao;
-    int linha, id;
+    private Double x, y, raio, angulo, velocidade, direcao;
+    private int linha, id;
 
     public int getId() {
         return id;
