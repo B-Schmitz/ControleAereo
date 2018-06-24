@@ -101,4 +101,3 @@ public class Calculos {
         return (distancia / velocidade) * 3600;
     }
 }
-

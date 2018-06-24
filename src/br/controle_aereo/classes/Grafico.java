@@ -12,7 +12,7 @@ import br.controle_aereo.janelas.Principal;
 public class Grafico {
 
     private final Principal frame;
-    private Graphics graph;
+    private Graphics grafico;
     private Pontos ponto;
     private BufferedImage img = null;
 
@@ -29,14 +29,14 @@ public class Grafico {
         }
     }
 
-    public void run() {
-        graph = frame.GetPainel().getGraphics();
-        graph.drawLine(0, 200, 400, 200);
-        graph.drawLine(200, 0, 200, 400);
+    public void Desenha() {
+        grafico = frame.GetPainel().getGraphics();
+        grafico.drawLine(0, 200, 400, 200);
+        grafico.drawLine(200, 0, 200, 400);
         Double[] coordenadas = new Double[2];
 
-        if (frame.isAlive()) {
-            graph.clearRect(0, 0, 400, 400);
+    //    if (frame.isAlive()) {
+            grafico.clearRect(0, 0, 400, 400);
             if (frame.isAcaoExclusao()) {
                 while (!frame.getFilaAcao().isEmpty()) {
                     ponto = new Pontos();
@@ -46,13 +46,13 @@ public class Grafico {
                 }
                 frame.setAcaoExclusao(false);
             }
-            graph.drawLine(0, 200, 400, 200);
-            graph.drawLine(200, 0, 200, 400);
+            grafico.drawLine(0, 200, 400, 200);
+            grafico.drawLine(200, 0, 200, 400);
             for (int i = 0; i < frame.getModel().getRowCount(); i++) {
                 coordenadas = normalizaPontos(Double.parseDouble(frame.getModel().getValueAt(i, 2).toString().replace(",", ".")), Double.parseDouble(frame.getModel().getValueAt(i, 3).toString().replace(",", ".")));
                 inserePonto(coordenadas[0], coordenadas[1], Double.parseDouble(frame.getModel().getValueAt(i, 7).toString().replace(",", ".")), frame.getModel().getValueAt(i, 1).toString());
             }
-        }
+        //}
 
     }
 
@@ -63,8 +63,8 @@ public class Grafico {
         double Localizacao_Y = img.getHeight() / 2;
         AffineTransform tx = AffineTransform.getRotateInstance(Direcao, Localizacao_X, Localizacao_Y);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-        graph.drawImage(op.filter(img, null), x.intValue() - 15, y.intValue() - 15, null);
-        graph.drawString(id, x.intValue(), y.intValue() - 12);
+        grafico.drawImage(op.filter(img, null), x.intValue() - 15, y.intValue() - 15, null);
+        grafico.drawString(id, x.intValue() - 1, y.intValue() - 12);
 
     }
 
@@ -82,5 +82,4 @@ public class Grafico {
 
         return coordenadas;
     }
-
 }

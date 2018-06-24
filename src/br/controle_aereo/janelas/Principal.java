@@ -20,7 +20,7 @@ public class Principal extends javax.swing.JFrame {
     private boolean ativo = true, acaoExclusao = false;
     private final Calculos cal = new Calculos();
     private double[] resultado = new double[2];
-    private final Graphics graph;
+    private final Graphics grafico;
     private final DefaultTableModel model;
     private double x, y, r, ang, vel, dir;
     private final Queue<Pontos> filaAcao = new LinkedList<>();
@@ -38,9 +38,9 @@ public class Principal extends javax.swing.JFrame {
         this.acaoExclusao = acaoExclusao;
     }
 
-    public boolean isAlive() {
-        return ativo;
-    }
+  //  public boolean isAlive() {
+  //      return ativo;
+   // }
 
     public boolean isAcaoExclusao() {
         return acaoExclusao;
@@ -56,7 +56,7 @@ public class Principal extends javax.swing.JFrame {
         icone = new ImageIcon("src/br/controle_aereo/icones/radar.png");
         this.setIconImage(icone.getImage());
         radiobutton_Cartesiana.setSelected(true);
-        graph = Painel_Radar.getGraphics();
+        grafico = Painel_Radar.getGraphics();
         model = (DefaultTableModel) tabela_Datagrid.getModel();
     }
 
@@ -695,7 +695,7 @@ public class Principal extends javax.swing.JFrame {
                 }
                 Object data[] = new Object[]{false, id, String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
                 insereTabela(data);
-                t.run();
+                t.Desenha();
             } else {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", 0);
 
@@ -738,7 +738,7 @@ public class Principal extends javax.swing.JFrame {
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
             });
 
-            t.run();
+            t.Desenha();
             filaCalculo.clear();
 
         } catch (ExcecaoErro e) {
@@ -782,12 +782,11 @@ public class Principal extends javax.swing.JFrame {
             }).forEachOrdered((p) -> {
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
             });
-            t.run();
+            t.Desenha();
             filaCalculo.clear();
         } catch (ExcecaoErro e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_btn_rotacionarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -803,7 +802,7 @@ public class Principal extends javax.swing.JFrame {
         for (int i = 0; i < size; i++) {
             model.removeRow(filaCalculo.poll().getLinha() - i);
         }
-        t.run();
+        t.Desenha();
     }//GEN-LAST:event_btn_excluirActionPerformed
 
     private void btn_transladarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transladarActionPerformed
@@ -812,15 +811,25 @@ public class Principal extends javax.swing.JFrame {
             double Tx = v.verificaDouble(txt_x_transladar.getText().replaceAll(",", "."));
             double Ty = v.verificaDouble(txt_y_transladar.getText().replaceAll(",", "."));
 
-            for (Pontos p : filaCalculo) {
+            filaCalculo.stream().map((p) -> {
                 resultado = cal.calculaTranslacao(p.getX(), p.getY(), Tx, Ty);
+                return p;
+            }).map((p) -> {
                 insereValorFormatado(resultado[0], p.getLinha(), 2);
+                return p;
+            }).map((p) -> {
                 insereValorFormatado(resultado[1], p.getLinha(), 3);
+                return p;
+            }).map((p) -> {
                 resultado = cal.calculaPolar(resultado[0], resultado[1]);
+                return p;
+            }).map((p) -> {
                 insereValorFormatado(resultado[0], p.getLinha(), 4);
+                return p;
+            }).forEachOrdered((p) -> {
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
-            }
-            t.run();
+            });
+            t.Desenha();
             filaCalculo.clear();
         } catch (ExcecaoErro e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -833,11 +842,7 @@ public class Principal extends javax.swing.JFrame {
         double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe a distância de parâmetro em km.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
         getTodos();
         String str = "";
-        for (Pontos p : arrayPontos) {
-            if (p.getR() < par) {
-                str += "Avião " + p.getId() + " está a " + p.getR() + " km " +"de distância\n";
-            }
-        }
+        str = arrayPontos.stream().filter((p) -> (p.getR() < par)).map((p) -> "Avião " + p.getId() + " está a " + p.getR() + " km " +"de distância\n").reduce(str, String::concat);
 
         if ("".equals(str)) {
             JOptionPane.showMessageDialog(null, "Não há aviões próximos ao aeroporto nesta distância", "Relatório", JOptionPane.INFORMATION_MESSAGE);
