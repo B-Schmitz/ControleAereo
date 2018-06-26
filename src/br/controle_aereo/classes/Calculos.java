@@ -56,20 +56,7 @@ public class Calculos {
     }
 
     public double[] calculaIntersecacao(double x1, double y1, double dir1, double x2, double y2, double dir2) {
-        /*double x, y, m, m1;
-
-        m = Math.tan(Math.toRadians(angulo1));
-        m1 = Math.tan(Math.toRadians(angulo2));
-
-        if (m == m1) {
-            return null;
-        } else {
-            x = ((m * x1 + y1 - y2) + (m1 * x2)) / (m1 - m);
-            y = ((m * x) - (m * x1)) + y1;
-            resultado[0] = x;
-            resultado[1] = y;
-            return resultado;
-        }*/
+        
          Double x, y, m1, m2, linear1, linear2;
 
         m1 = Math.tan(Math.toRadians(dir1));
@@ -96,7 +83,33 @@ public class Calculos {
     return resultado;
     }
 
-    public double calculaTempo(double x1, double y1, double velocidade, double x2, double y2) {
+    public double calculaTempo(double x1, double y1, double velocidade, double x2, double y2,double anguloDir) {
+        
+        
+        if(anguloDir%360 > 0 && anguloDir%360 < 180){
+            if(y1 > y2){
+                return -1;
+            }
+        }
+        else if(anguloDir%360 > 180){
+            if(y1 < y2){
+                return -1;
+            }
+        }
+        
+        else{
+            if(anguloDir%360 == 0){
+                if( x1 > x2){
+                    return -1;
+                }
+            }
+            
+            if(anguloDir%360 == 180){
+                if(x1 < x2){
+                   return -1; 
+                }
+            }
+        }
         double distancia = calculaDistanciaPontos(x1, y1, x2, y2);
         return (distancia / velocidade) * 3600;
     }

@@ -875,6 +875,7 @@ public class Principal extends javax.swing.JFrame {
 
         System.out.println(str);
 
+        t.Desenha();
         if ("".equals(str)) {
             JOptionPane.showMessageDialog(null, "Não há aviões próximos uns aos outros", "Relatório", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -907,9 +908,12 @@ public class Principal extends javax.swing.JFrame {
                 if (resultado == null) {
                     str2 += p2.getId() + " - Não se cruzam.\n";
                 } else {
-                    t1 = cal.calculaTempo(p1.getX(), p1.getY(), p1.getVel(), resultado[0], resultado[1]);
-                    t2 = cal.calculaTempo(p2.getX(), p2.getY(), p2.getVel(), resultado[0], resultado[1]);
+                    t1 = cal.calculaTempo(p1.getX(), p1.getY(), p1.getVel(), resultado[0], resultado[1], p1.getDir());
+                    t2 = cal.calculaTempo(p2.getX(), p2.getY(), p2.getVel(), resultado[0], resultado[1],p2.getDir());
 
+                    if(t1 == -1 || t2 == -1){
+                       str2 += p2.getId() + " - Não se cruzam.\n"; 
+                    }else{
                     dif = t1 - t2;
 
                     System.out.println(t1);
@@ -919,10 +923,12 @@ public class Principal extends javax.swing.JFrame {
                         str2 += "Avião " + p2.getId() + " - Vão passar pelo mesmo ponto com intervalo de " + (decimal.format(Math.abs(dif))) + "s.\n";
                     }
                 }
+                }
 
             }
             str += str2;
         }
+        t.Desenha();
         JOptionPane.showMessageDialog(null, str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_menu_colisoesActionPerformed
 
