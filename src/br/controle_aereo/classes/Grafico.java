@@ -35,7 +35,7 @@ public class Grafico {
         grafico.drawLine(200, 0, 200, 400);
         Double[] coordenadas = new Double[2];
 
-    //    if (frame.isAlive()) {
+       if (frame.isAlive()) {
             grafico.clearRect(0, 0, 400, 400);
             if (frame.isAcaoExclusao()) {
                 while (!frame.getFilaAcao().isEmpty()) {
@@ -52,7 +52,7 @@ public class Grafico {
                 coordenadas = normalizaPontos(Double.parseDouble(frame.getModel().getValueAt(i, 2).toString().replace(",", ".")), Double.parseDouble(frame.getModel().getValueAt(i, 3).toString().replace(",", ".")));
                 inserePonto(coordenadas[0], coordenadas[1], Double.parseDouble(frame.getModel().getValueAt(i, 7).toString().replace(",", ".")), frame.getModel().getValueAt(i, 1).toString());
             }
-        //}
+        }
 
     }
 

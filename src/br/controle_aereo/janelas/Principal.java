@@ -38,9 +38,9 @@ public class Principal extends javax.swing.JFrame {
         this.acaoExclusao = acaoExclusao;
     }
 
-  //  public boolean isAlive() {
-  //      return ativo;
-   // }
+    public boolean isAlive() {
+        return ativo;
+    }
 
     public boolean isAcaoExclusao() {
         return acaoExclusao;
@@ -123,6 +123,11 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Controle Aéreo");
         setResizable(false);
+        addWindowStateListener(new java.awt.event.WindowStateListener() {
+            public void windowStateChanged(java.awt.event.WindowEvent evt) {
+                formWindowStateChanged(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -838,49 +843,60 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_transladarActionPerformed
 
     private void menu_aviaoes_aeroportoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_aviaoes_aeroportoActionPerformed
+        try {
+            double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe a distância máxima do aeroporto em km.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
+            getTodos();
+            String str = "";
+            str = arrayPontos.stream().filter((p) -> (p.getR() < par)).map((p) -> "Avião " + p.getId() + " está a " + p.getR() + " km " + "de distância\n").reduce(str, String::concat);
 
-        double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe a distância de parâmetro em km.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
-        getTodos();
-        String str = "";
-        str = arrayPontos.stream().filter((p) -> (p.getR() < par)).map((p) -> "Avião " + p.getId() + " está a " + p.getR() + " km " +"de distância\n").reduce(str, String::concat);
-
-        if ("".equals(str)) {
-            JOptionPane.showMessageDialog(null, "Não há aviões próximos ao aeroporto nesta distância", "Relatório", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Aviões  próximos ao aeroporto:\n" + str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
+            if ("".equals(str)) {
+                JOptionPane.showMessageDialog(null, "Não há aviões próximos ao aeroporto nesta distância", "Relatório", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Aviões  próximos ao aeroporto:\n" + str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: Distância ao aeroporto não informada");
         }
     }//GEN-LAST:event_menu_aviaoes_aeroportoActionPerformed
 
     private void menu_aviaoes_proximosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_aviaoes_proximosActionPerformed
+        try {
+            double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe a distância entre os aviões em km.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
 
-        getTodos();
-        String str = "", str2 = "";
-        Pontos p1, p2;
-        double dist;
-        DecimalFormat decimal = new DecimalFormat("#.000");
+            getTodos();
+            String str = "", str2 = "";
+            Pontos p1, p2;
+            double dist = 0;
+            DecimalFormat decimal = new DecimalFormat("0.0000");
 
-        for (int i = 0; i < arrayPontos.size() - 1; i++) {
-            p1 = arrayPontos.get(i);
-            str2 = "\nAvião " + p1.getId() + "\n\t";
-            for (int j = i + 1; j < arrayPontos.size(); j++) {
-                p2 = arrayPontos.get(j);
-                
+            for (int i = 0; i < arrayPontos.size() - 1; i++) {
+                p1 = arrayPontos.get(i);
+                str2 = "\nAvião " + p1.getId() + "\n\t";
+                for (int j = i + 1; j < arrayPontos.size(); j++) {
+                    p2 = arrayPontos.get(j);
 
-                dist = cal.calculaDistanciaPontos(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-                str2 += decimal.format(dist) + "km " + "do " + "Avião " + p2.getId() + "\n";
+                    dist = cal.calculaDistanciaPontos(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 
+                    if (dist <= par) {
+                        str2 += decimal.format(dist) + "km " + "do " + "Avião " + p2.getId() + "\n";
+                    } else {
+                        str2 += "Avião " + p2.getId() + " está mais longe que a distância informada" + "\n";
+                    }
+
+                }
+                str += str2;
             }
-            str += str2;
+
+            if (!str.contains("km")) {
+                JOptionPane.showMessageDialog(null, "Nenhum avião próximo de outro.", "Relatório", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("NumberFormatException: Distância máxima entre os aviões não informada");
         }
 
-        System.out.println(str);
-
-        t.Desenha();
-        if ("".equals(str)) {
-            JOptionPane.showMessageDialog(null, "Não há aviões próximos uns aos outros", "Relatório", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
-        }
     }//GEN-LAST:event_menu_aviaoes_proximosActionPerformed
 
     private void menu_tangenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tangenteActionPerformed
@@ -909,26 +925,26 @@ public class Principal extends javax.swing.JFrame {
                     str2 += p2.getId() + " - Não se cruzam.\n";
                 } else {
                     t1 = cal.calculaTempo(p1.getX(), p1.getY(), p1.getVel(), resultado[0], resultado[1], p1.getDir());
-                    t2 = cal.calculaTempo(p2.getX(), p2.getY(), p2.getVel(), resultado[0], resultado[1],p2.getDir());
+                    t2 = cal.calculaTempo(p2.getX(), p2.getY(), p2.getVel(), resultado[0], resultado[1], p2.getDir());
 
-                    if(t1 == -1 || t2 == -1){
-                       str2 += p2.getId() + " - Não se cruzam.\n"; 
-                    }else{
-                    dif = t1 - t2;
+                    if (t1 == -1 || t2 == -1) {
+                        str2 += p2.getId() + " - Não se cruzam.\n";
+                    } else {
+                        dif = t1 - t2;
 
-                    System.out.println(t1);
-                    System.out.println(t2);
-                    System.out.println(dif);
-                    if (Math.abs(dif) < par) {
-                        str2 += "Avião " + p2.getId() + " - Vão passar pelo mesmo ponto com intervalo de " + (decimal.format(Math.abs(dif))) + "s.\n";
+                        System.out.println(t1);
+                        System.out.println(t2);
+                        System.out.println(dif);
+                        if (Math.abs(dif) < par) {
+                            str2 += "Avião " + p2.getId() + " - Vão passar pelo mesmo ponto com intervalo de " + (decimal.format(Math.abs(dif))) + "s.\n";
+                        }
                     }
-                }
                 }
 
             }
             str += str2;
         }
-        t.Desenha();
+        // t.Desenha();
         JOptionPane.showMessageDialog(null, str, "Relatório", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_menu_colisoesActionPerformed
 
@@ -949,6 +965,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_selecionar_todosActionPerformed
 
     public boolean Converte() {
+        t.Desenha();
         if (radiobutton_Cartesiana.isSelected()) {
             try {
                 x = v.verificaDouble(txt_X.getText().replaceAll(",", "."));
@@ -991,6 +1008,14 @@ public class Principal extends javax.swing.JFrame {
     private void menu_sobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_sobreActionPerformed
         JOptionPane.showMessageDialog(null, "O Projeto proposto pelo professor Giácomo Antônio Althoff Bolan, tem como propósito, usar a matemática e a computação gráfica\npara proteger vidas de possíveis acidentes aéreos.\n\nAutores: Bernardo, Michael\nVersão 1.2\nData: 29/06/2018\n\n\nEmails:\nbernardo_schmitz@live.com\nmb-nascimento@hotmail.com\n\nUniversidade do Extremo Sul de Santa Catarina (UNESC)", "Sobre", 1);
     }//GEN-LAST:event_menu_sobreActionPerformed
+
+    private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
+        int estado = evt.getNewState();
+
+        t.Desenha();
+        System.out.println("TESTE 11 ");
+
+    }//GEN-LAST:event_formWindowStateChanged
 
     public void insereValorFormatado(double valor, int row, int column) {
         String vForm = String.valueOf(new DecimalFormat("#.00").format(valor));
