@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +28,7 @@ public class Principal extends javax.swing.JFrame {
     private final Queue<Pontos> filaCalculo = new LinkedList<>();
     private final Verifica v = new Verifica();
     private ArrayList<Pontos> arrayPontos;
-    private final Grafico t = new Grafico(this);
+    private Grafico g = new Grafico(this);
     private final ImageIcon icone;
 
     public JPanel GetPainel() {
@@ -115,7 +116,6 @@ public class Principal extends javax.swing.JFrame {
         menu_relatorios = new javax.swing.JMenu();
         menu_aviaoes_aeroporto = new javax.swing.JMenuItem();
         menu_aviaoes_proximos = new javax.swing.JMenuItem();
-        menu_tangente = new javax.swing.JMenuItem();
         menu_colisoes = new javax.swing.JMenuItem();
         menu_ajuda = new javax.swing.JMenu();
         menu_sobre = new javax.swing.JMenuItem();
@@ -123,11 +123,6 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Controle Aéreo");
         setResizable(false);
-        addWindowStateListener(new java.awt.event.WindowStateListener() {
-            public void windowStateChanged(java.awt.event.WindowEvent evt) {
-                formWindowStateChanged(evt);
-            }
-        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -619,15 +614,6 @@ public class Principal extends javax.swing.JFrame {
         });
         menu_relatorios.add(menu_aviaoes_proximos);
 
-        menu_tangente.setText("Tangente");
-        menu_tangente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        menu_tangente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_tangenteActionPerformed(evt);
-            }
-        });
-        menu_relatorios.add(menu_tangente);
-
         menu_colisoes.setText("Colisões");
         menu_colisoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_colisoes.addActionListener(new java.awt.event.ActionListener() {
@@ -700,7 +686,7 @@ public class Principal extends javax.swing.JFrame {
                 }
                 Object data[] = new Object[]{false, id, String.valueOf(new DecimalFormat("#.00").format(x)), String.valueOf(new DecimalFormat("#.00").format(y)), String.valueOf(new DecimalFormat("#.00").format(r)), String.valueOf(new DecimalFormat("#.00").format(ang)), String.valueOf(new DecimalFormat("#.00").format(vel)), String.valueOf(new DecimalFormat("#.00").format(dir))};
                 insereTabela(data);
-                t.Desenha();
+                g.Desenha();
             } else {
                 JOptionPane.showMessageDialog(null, "Preencha todos os campos!", "Erro", 0);
 
@@ -743,7 +729,7 @@ public class Principal extends javax.swing.JFrame {
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
             });
 
-            t.Desenha();
+            g.Desenha();
             filaCalculo.clear();
 
         } catch (ExcecaoErro e) {
@@ -787,7 +773,7 @@ public class Principal extends javax.swing.JFrame {
             }).forEachOrdered((p) -> {
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
             });
-            t.Desenha();
+            g.Desenha();
             filaCalculo.clear();
         } catch (ExcecaoErro e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -807,7 +793,7 @@ public class Principal extends javax.swing.JFrame {
         for (int i = 0; i < size; i++) {
             model.removeRow(filaCalculo.poll().getLinha() - i);
         }
-        t.Desenha();
+        g.Desenha();
     }//GEN-LAST:event_btn_excluirActionPerformed
 
     private void btn_transladarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_transladarActionPerformed
@@ -834,7 +820,7 @@ public class Principal extends javax.swing.JFrame {
             }).forEachOrdered((p) -> {
                 insereValorFormatado(resultado[1], p.getLinha(), 5);
             });
-            t.Desenha();
+            g.Desenha();
             filaCalculo.clear();
         } catch (ExcecaoErro e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
@@ -847,7 +833,7 @@ public class Principal extends javax.swing.JFrame {
             double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe a distância máxima do aeroporto em km.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
             getTodos();
             String str = "";
-            str = arrayPontos.stream().filter((p) -> (p.getR() < par)).map((p) -> "Avião " + p.getId() + " está a " + p.getR() + " km " + "de distância\n").reduce(str, String::concat);
+            str = arrayPontos.stream().filter((p) -> (p.getR() <= par)).map((p) -> "Avião " + p.getId() + " está a " + p.getR() + " km " + "de distância\n").reduce(str, String::concat);
 
             if ("".equals(str)) {
                 JOptionPane.showMessageDialog(null, "Não há aviões próximos ao aeroporto nesta distância", "Relatório", JOptionPane.INFORMATION_MESSAGE);
@@ -864,27 +850,35 @@ public class Principal extends javax.swing.JFrame {
             double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe a distância entre os aviões em km.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
 
             getTodos();
-            String str = "", str2 = "";
+            String str = "", str2 = "", teste = "";
             Pontos p1, p2;
             double dist = 0;
+            int cont = 0;
             DecimalFormat decimal = new DecimalFormat("0.0000");
 
             for (int i = 0; i < arrayPontos.size() - 1; i++) {
                 p1 = arrayPontos.get(i);
-                str2 = "\nAvião " + p1.getId() + "\n\t";
+
                 for (int j = i + 1; j < arrayPontos.size(); j++) {
                     p2 = arrayPontos.get(j);
 
                     dist = cal.calculaDistanciaPontos(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 
                     if (dist <= par) {
-                        str2 += decimal.format(dist) + "km " + "do " + "Avião " + p2.getId() + "\n";
-                    } else {
-                        str2 += "Avião " + p2.getId() + " está mais longe que a distância informada" + "\n";
+                        if (cont < 1) {
+                            teste = "\nAvião " + p1.getId() + "\n";
+                            str2 = teste;
+                        }
+                        str2 += decimal.format(dist) + "km " + "de distância do" + " Avião " + p2.getId() + "\n";
+                        cont++;
                     }
 
                 }
+                // Zerando as variaveis.
                 str += str2;
+                dist = -1;
+                str2 = "";
+                cont = 0;
             }
 
             if (!str.contains("km")) {
@@ -898,12 +892,6 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_menu_aviaoes_proximosActionPerformed
-
-    private void menu_tangenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_tangenteActionPerformed
-        double par = Double.parseDouble(JOptionPane.showInputDialog(null, "Informe o angulo.", "Informe", JOptionPane.QUESTION_MESSAGE).replaceAll(",", "."));
-
-        JOptionPane.showMessageDialog(null, Math.tan(Math.toRadians(par)));
-    }//GEN-LAST:event_menu_tangenteActionPerformed
 
     private void menu_colisoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_colisoesActionPerformed
 
@@ -965,7 +953,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_selecionar_todosActionPerformed
 
     public boolean Converte() {
-        t.Desenha();
+        g.Desenha();
         if (radiobutton_Cartesiana.isSelected()) {
             try {
                 x = v.verificaDouble(txt_X.getText().replaceAll(",", "."));
@@ -1006,16 +994,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_converterActionPerformed
 
     private void menu_sobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_sobreActionPerformed
-        JOptionPane.showMessageDialog(null, "O Projeto proposto pelo professor Giácomo Antônio Althoff Bolan, tem como propósito, usar a matemática e a computação gráfica\npara proteger vidas de possíveis acidentes aéreos.\n\nAutores: Bernardo, Michael\nVersão 1.2\nData: 29/06/2018\n\n\nEmails:\nbernardo_schmitz@live.com\nmb-nascimento@hotmail.com\n\nUniversidade do Extremo Sul de Santa Catarina (UNESC)", "Sobre", 1);
+        JOptionPane.showMessageDialog(null, "O Projeto proposto pelo professor Giácomo Antônio Althoff Bolan, tem como propósito, usar a matemática e a computação gráfica\npara proteger vidas de possíveis acidentes aéreos.\n\nAutores: Bernardo, Michael\nVersão 1.3\nData: 30/06/2018\n\n\nEmails:\nbernardo_schmitz@live.com\nmb-nascimento@hotmail.com\n\nUniversidade do Extremo Sul de Santa Catarina (UNESC)", "Sobre", 1);
     }//GEN-LAST:event_menu_sobreActionPerformed
-
-    private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
-        int estado = evt.getNewState();
-
-        t.Desenha();
-        System.out.println("TESTE 11 ");
-
-    }//GEN-LAST:event_formWindowStateChanged
 
     public void insereValorFormatado(double valor, int row, int column) {
         String vForm = String.valueOf(new DecimalFormat("#.00").format(valor));
@@ -1141,7 +1121,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_colisoes;
     private javax.swing.JMenu menu_relatorios;
     private javax.swing.JMenuItem menu_sobre;
-    private javax.swing.JMenuItem menu_tangente;
     private javax.swing.JPanel painel_principal;
     private javax.swing.JRadioButton radiobutton_Cartesiana;
     private javax.swing.JRadioButton radiobutton_Polar;
